@@ -4,9 +4,9 @@ import Person from './Person/Person';
 
 const App = props => {
   const [ personsState, setPersonsState ] = useState([
-    { name: 'Max', age: 28 },
-    { name: 'Manu', age: 29 },
-    { name: 'Sthepanie', age: 26 }
+    { id: '1',name: 'Max', age: 28 },
+    { id: '2',name: 'Manu', age: 29 },
+    { id: '3',name: 'Sthepanie', age: 26 }
   ]);
 
   const [showPersons, setShowPersons] = useState(false);
@@ -49,6 +49,7 @@ const App = props => {
               click={() => deletePersonHandler(index)}
               name={person.name}
               age={person.age}
+              key={person.id}
             />
           )
         })}
