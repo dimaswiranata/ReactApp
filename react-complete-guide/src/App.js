@@ -3,36 +3,26 @@ import './App.css';
 import Person from './Person/Person';
 
 const App = props => {
-  const [ personsState, setPersonsState ] = useState({
-    persons: [
-      { name: 'Max', age: 28 },
-      { name: 'Manu', age: 29 },
-      { name: 'Sthepanie', age: 26 }
-    ],
-    otherState: 'some other value'
-  });
+  const [ personsState, setPersonsState ] = useState([
+    { name: 'Max', age: 28 },
+    { name: 'Manu', age: 29 },
+    { name: 'Sthepanie', age: 26 }
+  ]);
 
   const [showPersons, setShowPersons] = useState(false);
-  
-  const switchNameHandler = (newName) => {
-    console.log('Was clicked!');
-    setPersonsState({
-      persons: [
-        { name: newName, age: 28 },
-        { name: 'Manu', age: 29 },
-        { name: 'Sthepanie', age: 26 }
-      ]
-    });
-  };
 
   const nameChangedHandler = (event) => {
-    setPersonsState({
-      persons: [
-        { name: 'Max', age: 28 },
-        { name: event.target.value, age: 29 },
-        { name: 'Sthepanie', age: 26 }
-      ]
-    });
+    setPersonsState([
+      { name: 'Max', age: 28 },
+      { name: event.target.value, age: 29 },
+      { name: 'Sthepanie', age: 26 }
+    ]);
+  };
+
+  const deletePersonHandler = (index) => {
+    const persons = [...personsState];
+    persons.splice(index, 1);
+    setPersonsState(persons);
   };
 
   const togglePersonsHandler = () => {
@@ -53,22 +43,15 @@ const App = props => {
   if (showPersons) {
     persons = (
       <div>
-        <Person 
-          name={personsState.persons[0].name} 
-          age={personsState.persons[0].age}
-        />
-        <Person 
-          name={personsState.persons[1].name} 
-          age={personsState.persons[1].age}
-          click={switchNameHandler.bind(this, 'Max!')}
-          changed={nameChangedHandler}
-        >
-          My Hobbies : Racing
-        </Person>
-        <Person 
-          name={personsState.persons[2].name} 
-          age={personsState.persons[2].age}
-        />
+        {personsState.map((person, index) =>{
+          return (
+            <Person
+              click={() => deletePersonHandler(index)}
+              name={person.name}
+              age={person.age}
+            />
+          )
+        })}
       </div>
     );
   }
