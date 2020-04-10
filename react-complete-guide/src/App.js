@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './App.css';
-import Radium, { StyleRoot } from 'radium';
 import Person from './Person/Person';
 
 const App = props => {
@@ -40,20 +39,8 @@ const App = props => {
     setShowPersons(!doesShow);
   };
 
-  const style = {
-    backgroundColor: 'green',
-    color: 'white',
-    font: 'inherit',
-    border: '1px solid blue',
-    padding: '8px',
-    cursor: 'pointer',
-    ':hover': {
-      backgroundColor: 'lightgreen',
-      color: 'black'
-    }
-  }
-
   let persons = null;
+  let btnClass = '';
 
   if (showPersons) {
     persons = (
@@ -72,11 +59,7 @@ const App = props => {
       </div>
     );
 
-    style.backgroundColor='red';
-    style[':hover'] = {
-      backgroundColor: 'salmon',  
-      color: 'black'
-    };
+    btnClass = 'Red'
   }
 
   // let classes = ['red', 'bold'].join(' ');
@@ -89,21 +72,19 @@ const App = props => {
   }
 
   return (
-    <StyleRoot>
       <div className="App">
         <h1>Hi, I'm a React App</h1>
         <p className={classes.join(' ')}>This is really working!</p>
-        <button 
+        <button
+          className={btnClass}
           onClick={togglePersonsHandler}
-          style={style}
         >
           Toggle Persons
         </button>
         {persons}
       </div>
-    </StyleRoot>
   );
   // return React.createElement('div', {className:'App'}, React.createElement('h1', null, 'Does this work now?'))
 }
 
-export default Radium(App);
+export default App;
