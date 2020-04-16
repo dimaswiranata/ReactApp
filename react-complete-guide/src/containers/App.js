@@ -5,69 +5,7 @@ import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 import withClass from '../hoc/withClass';
 import Auxiliary from '../hoc/Auxiliary';
-
-// const App = props => {
-//   const [ personsState, setPersonsState ] = useState([
-//     { id: '1',name: 'Max', age: 28 },
-//     { id: '2',name: 'Manu', age: 29 },
-//     { id: '3',name: 'Sthepanie', age: 26 }
-//   ]);
-
-//   const [showPersons, setShowPersons] = useState(false);
-
-//   const nameChangedHandler = (event, id) => {
-//     const personIndex = personsState.findIndex(p => {
-//       return p.id === id;
-//     });
-
-//     const person = {
-//       ...personsState[personIndex]
-//     };
-
-//     person.name = event.target.value;
-
-//     const persons = [...personsState];
-//     persons[personIndex] = person;
-
-//     setPersonsState(persons);
-//   };
-
-//   const deletePersonHandler = (index) => {
-//     const persons = [...personsState];
-//     persons.splice(index, 1);
-//     setPersonsState(persons);
-//   };
-
-//   const togglePersonsHandler = () => {
-//     const doesShow = showPersons;
-//     setShowPersons(!doesShow);
-//   };
-
-//   let persons = null;
-
-//   if (showPersons) {
-//     persons = (
-//       <Persons 
-//         persons={personsState}
-//         clicked={deletePersonHandler}
-//         changed={nameChangedHandler}
-//       />
-//     );
-//   }
-
-//   return (
-//       <div className="App">
-//         <Cockpit
-//           title={props.appTitle}
-//           showPersons={showPersons}
-//           persons={personsState}
-//           clicked={togglePersonsHandler}
-//         />
-//         {persons}
-//       </div>
-//   );
-//   // return React.createElement('div', {className:'App'}, React.createElement('h1', null, 'Does this work now?'))
-// }
+import authContext from '../context/auth-context';
 
 class App extends Component {
   constructor(props) {
@@ -174,16 +112,22 @@ class App extends Component {
         >
           Remove Cockpit
         </button>
-        {this.state.showCockpit ? 
-          <Cockpit
-            title={this.props.appTitle}
-            showPersons={this.state.showPersons}
-            personsLength={this.state.persons.length}
-            clicked={this.togglePersonsHandler}
-            login={this.loginHandler}
-          /> : null
-        }
-        {persons}
+        <authContext.Provider 
+          value={{
+            authenticated: this.state.authenticated,
+            login: this.loginHandler
+          }}
+        >
+          {this.state.showCockpit ? 
+            <Cockpit
+              title={this.props.appTitle}
+              showPersons={this.state.showPersons}
+              personsLength={this.state.persons.length}
+              clicked={this.togglePersonsHandler}
+            /> : null
+          }
+          {persons}
+        </authContext.Provider>
       </Auxiliary>
     );
     // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
