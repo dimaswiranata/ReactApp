@@ -5,7 +5,7 @@ import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 import withClass from '../hoc/withClass';
 import Auxiliary from '../hoc/Auxiliary';
-import authContext from '../context/auth-context';
+import AuthContext from '../context/auth-context';
 
 class App extends Component {
   constructor(props) {
@@ -112,7 +112,7 @@ class App extends Component {
         >
           Remove Cockpit
         </button>
-        <authContext.Provider 
+        <AuthContext.Provider 
           value={{
             authenticated: this.state.authenticated,
             login: this.loginHandler
@@ -127,7 +127,7 @@ class App extends Component {
             /> : null
           }
           {persons}
-        </authContext.Provider>
+        </AuthContext.Provider>
       </Auxiliary>
     );
     // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
